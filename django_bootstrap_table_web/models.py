@@ -10,6 +10,9 @@ class User(models.Model):
     phone = models.CharField(max_length=11, default="")
     adddate = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.name
+
 
 def user2dict(obj):
     if isinstance(obj, User):
