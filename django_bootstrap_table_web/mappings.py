@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+app_name="django_bootstrap_table"
 urlpatterns = [
     path("", views.index),
     path("index", views.index),
@@ -8,4 +8,5 @@ urlpatterns = [
     path("userlist", views.user_list),
     path("newdata", views.newdata),
     path("datacount", views.datacount),
+    path("detail", views.detail,name="detail"),
 ]

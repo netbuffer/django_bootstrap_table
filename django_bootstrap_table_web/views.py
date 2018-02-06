@@ -14,10 +14,15 @@ def index(request):
         "sex": "男",
     }
 
-    return render(request, 'index.html', data)
+    return render(request, 'user.html', data)
 
 
 from django_bootstrap_table_web.models import user2dict
+
+
+def detail(request):
+    u = user2dict(User.objects.get(id=int(request.GET.get("id"))))
+    return HttpResponse(json.dumps(u), content_type="application/json")
 
 
 # 返回user json数据
