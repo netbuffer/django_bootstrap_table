@@ -11,3 +11,4 @@
 更新表结构:`python manage.py makemigrations`  
 执行更新表:`python manage.py migrate`  
 创建用户`python manage.py createsuperuser`  
+进入命令行交互:`python manage.py shell`

@@ -5,9 +5,17 @@
     <title>index</title>
 </head>
 <body>
-name:{{ name }}<br/>
+<a href="https://docs.djangoproject.com/en/2.0/ref/templates/builtins/" target="_blank">https://docs.djangoproject.com/en/2.0/ref/templates/builtins/</a><br/>
+name:{{ name }}—{{ name | length }}<br/>
 sex:{{ sex }}<br/>
-{{ users }}
-<a href="{% url "django_bootstrap_table:detail" %}?id=1" target="_blank">{% url "django_bootstrap_table:detail" %}?id=1</a>
+default:{{ a | default:"a" }}<br/>
+{% if user %}
+    user:{{ users }}<br/>
+{% else %}
+    no user
+{% endif %}
+<hr/>
+<a href="{% url "django_bootstrap_table:detail" %}?id=1"
+   target="_blank">{% url "django_bootstrap_table:detail" %}?id=1</a>It is {% now "SHORT_DATETIME_FORMAT" %}
 </body>
 </html>
