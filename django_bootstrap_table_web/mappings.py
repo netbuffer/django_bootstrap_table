@@ -9,4 +9,5 @@ urlpatterns = [
     path("newdata", views.newdata),
     path("datacount", views.datacount),
     path("detail", views.detail,name="detail"),
+    path("<int:id>", views.detail,name="detail"),
 ]

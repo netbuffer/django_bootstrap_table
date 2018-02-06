@@ -20,8 +20,19 @@ def index(request):
 from django_bootstrap_table_web.models import user2dict
 
 
-def detail(request):
-    u = user2dict(User.objects.get(id=int(request.GET.get("id"))))
+# 用户详情
+def detail(request, id=None):
+    if not id:
+        if not request.GET.get("id"):
+            id = None
+        else:
+            id = request.GET.get("id")
+    pass
+    u = None
+    try:
+        u = user2dict(User.objects.get(id=id))
+    except Exception as err:
+        print("err:", err)
     return HttpResponse(json.dumps(u), content_type="application/json")
 
 
