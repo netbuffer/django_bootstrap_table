@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
     # 查询过滤器
     list_filter = ['age']
     # 搜索字段
-    search_fields = ['name', "sex", "age"]
+    search_fields = ('name', "sex", "age")
 
 
 # 注册User model

@@ -1,8 +1,11 @@
 import json
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
 from django_bootstrap_table_web.models import User
 from django_bootstrap_table_web.models import user2dict
+
 
 # Create your views here.
 
@@ -70,5 +73,6 @@ def hello(request):
     print("aaa")
     return HttpResponse("hello world!")
 
-# def redirect(request):
-#     return HttpResponse("hello world!")
+# redirect响应
+def redirect(request):
+    return HttpResponseRedirect(reverse("django_bootstrap_table:detail", args=(1,)))
