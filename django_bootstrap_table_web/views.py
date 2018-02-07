@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -12,6 +13,7 @@ from .forms import UserForm
 
 # Create your views here.
 
+# 添加/修改用户
 def user(request):
     if request.method == "GET":
         user_id = request.GET.get('id')
@@ -51,14 +53,29 @@ def test(request):
     return render(request, 'test.html', data)
 
 
+# 删除用户
+def delete_user(request):
+    data = {
+        "success": True,
+    }
+    user_id = request.GET.get("id", None)
+    if user_id and int(user_id) > 0:
+        try:
+            User.objects.get(pk=user_id).delete()
+        except Exception as err:
+            data["err"] = err
+            data["success"]=False
+    return JsonResponse(data)
+
+
 # 用户详情
 def detail(request, id=None):
-    if not id:
-        if not request.GET.get("id"):
-            id = None
-        else:
-            id = request.GET.get("id")
-    pass
+    if id:
+        user_id = id
+    else:
+        user_id = request.GET.get("id", None)
+    if not user_id:
+        return JsonResponse([])
     u = None
     try:
         u = user2dict(User.objects.get(id=id))
@@ -74,8 +91,14 @@ def user_list(request):
         limit = request.GET["limit"]
     if "offset" in request.GET:
         offset = request.GET["offset"]
-    print("limit:{},offset:{}".format(limit, offset))
-    users = User.objects.all()
+
+    if limit and int(limit) > 0 and offset and int(offset) >= 0:
+        print("这里")
+        users = User.objects.all()[int(offset):int(offset) + int(limit)]
+    else:
+        print("这fsdfsf里")
+        users = User.objects.all()
+
     rows = []
     for user in users:
         rows.append(user2dict(user))
