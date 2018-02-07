@@ -1,10 +1,8 @@
 import json
-
 from django.http import HttpResponse
 from django.shortcuts import render
-
 from django_bootstrap_table_web.models import User
-
+from django_bootstrap_table_web.models import user2dict
 
 # Create your views here.
 
@@ -13,11 +11,7 @@ def index(request):
         "name": "hello",
         "sex": "男",
     }
-
     return render(request, 'user.html', data)
-
-
-from django_bootstrap_table_web.models import user2dict
 
 
 # 用户详情
@@ -75,3 +69,6 @@ def datacount(request):
 def hello(request):
     print("aaa")
     return HttpResponse("hello world!")
+
+# def redirect(request):
+#     return HttpResponse("hello world!")
