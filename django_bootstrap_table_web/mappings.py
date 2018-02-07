@@ -1,11 +1,12 @@
 from django.urls import path
+
 from . import views
 
 app_name = "django_bootstrap_table"
 
 urlpatterns = [
-    path("", views.index),
-    path("index", views.index),
+    path("", views.user, name="user_controller"),
+    path("test", views.test),
     path("hello", views.hello),
     path("userlist", views.user_list),
     path("newdata", views.newdata),

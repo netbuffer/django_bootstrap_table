@@ -5,6 +5,15 @@
     <title>index</title>
 </head>
 <body>
+is_ajax:{{ request.is_ajax }}<br/>
+get_host:{{ request.get_host }}<br/>
+content_type:{{ request.content_type }}<br/>
+encoding:{{ request.encoding }}<br/>
+method:{{ request.method}}<br/>
+get_full_path:{{ request.get_full_path}}<br/>
+COOKIES:{{ request.COOKIES}}<br/>
+
+<hr/>
 <a href="https://docs.djangoproject.com/en/2.0/ref/templates/builtins/" target="_blank">https://docs.djangoproject.com/en/2.0/ref/templates/builtins/</a><br/>
 name:{{ name }}—{{ name | length }}<br/>
 sex:{{ sex }}<br/>

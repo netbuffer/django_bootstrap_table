@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>维护用户</title>
+</head>
+<body>
+{% if user_id is None or user_id == "0" %}
+    <h1>添加用户</h1>
+{% else %}
+    <h1>修改用户</h1>
+{% endif %}
+{{ message }}
+<form action="{% url "django_bootstrap_table:user_controller" %}" method="post">
+    <input name="id" value="{{ user_id|default_if_none:0 }}" type="hidden"/>
+    {% csrf_token %}
+    {{ user_form }}
+    {% if message is None %}
+        <button type="submit">提交</button>
+    {% endif %}
+</form>
+</body>
+</html>

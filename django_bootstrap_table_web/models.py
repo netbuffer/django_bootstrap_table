@@ -5,8 +5,8 @@ from django.db import models
 
 class User(models.Model):
     name = models.CharField(max_length=50)
-    sex = models.CharField(max_length=1, default="男")
     age = models.IntegerField(default=0)
+    sex = models.CharField(max_length=1, default="男")
     phone = models.CharField(max_length=11, default="")
     adddate = models.IntegerField(default=0)
 
