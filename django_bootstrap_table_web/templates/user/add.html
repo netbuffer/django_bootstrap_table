@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>维护用户</title>
+    <script type="text/javascript">
+        window.onload=function(){
+            document.getElementById("id_adddate").value=Math.round(new Date().getTime()/1000);
+        }
+    </script>
 </head>
 <body>
 {% if user_id is None or user_id == "0" %}

@@ -1,14 +1,13 @@
 import json
-
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-
 from django_bootstrap_table_web.models import User
 from django_bootstrap_table_web.models import user2dict
 from .forms import UserForm
+from .apps import DjangoBootstrapTableWebConfig
 
 
 # Create your views here.
@@ -44,15 +43,6 @@ def user(request):
         pass
 
 
-def test(request):
-    data = {
-        "name": "hello",
-        "sex": "男",
-        "request": request
-    }
-    return render(request, 'test.html', data)
-
-
 # 删除用户
 def delete_user(request):
     data = {
@@ -64,7 +54,7 @@ def delete_user(request):
             User.objects.get(pk=user_id).delete()
         except Exception as err:
             data["err"] = err
-            data["success"]=False
+            data["success"] = False
     return JsonResponse(data)
 
 
@@ -84,7 +74,7 @@ def detail(request, id=None):
     return HttpResponse(json.dumps(u), content_type="application/json")
 
 
-# 返回user json数据
+# 返回user list json数据
 def user_list(request):
     limit, offset = [None, None]
     if "limit" in request.GET:
@@ -93,10 +83,8 @@ def user_list(request):
         offset = request.GET["offset"]
 
     if limit and int(limit) > 0 and offset and int(offset) >= 0:
-        print("这里")
         users = User.objects.all()[int(offset):int(offset) + int(limit)]
     else:
-        print("这fsdfsf里")
         users = User.objects.all()
 
     rows = []
@@ -106,16 +94,24 @@ def user_list(request):
         "total": User.objects.count(),
         "rows": rows
     }
-    print("data:", data)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
+from django.db import connection
+
+
+# 获取当时新增数据
 def newdata(request):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select count(id) from {0} where DATE_FORMAT(NOW(), '%Y-%m-%d') = FROM_UNIXTIME(adddate, '%Y-%m-%d')".format(
+                DjangoBootstrapTableWebConfig.name + "_user"))
+        count = cursor.fetchone()[0]
     data = {
-        "newcount": User.objects.count(),
+        "newcount": count,
         "username": "admin"
     }
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return JsonResponse(data)
 
 
 def datacount(request):
@@ -124,6 +120,15 @@ def datacount(request):
         "c": ["2018-02-04"]
     }
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def test(request):
+    data = {
+        "name": "hello",
+        "sex": "男",
+        "request": request
+    }
+    return render(request, 'test.html', data)
 
 
 def hello(request):
