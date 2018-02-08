@@ -19,7 +19,8 @@ from django.urls import path
 from . import controller
 
 urlpatterns = [
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),
     path('', controller.index),
     path('admin/', admin.site.urls),
-    path("user/", include("django_bootstrap_table_web.mappings"))
+    path("user/", include("django_bootstrap_table_web.mappings")),
 ]

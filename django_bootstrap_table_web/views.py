@@ -8,6 +8,7 @@ from django_bootstrap_table_web.models import User
 from django_bootstrap_table_web.models import user2dict
 from .forms import UserForm
 from .apps import DjangoBootstrapTableWebConfig
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -15,6 +16,7 @@ USER_TABLE_SUFFIX = "_user"
 
 
 # 添加/修改用户
+@login_required
 def user(request):
     if request.method == "GET":
         user_id = request.GET.get('id')
@@ -46,6 +48,7 @@ def user(request):
 
 
 # 删除用户
+@login_required(login_url='/accounts/login/')
 def delete_user(request):
     data = {
         "success": True,
@@ -57,6 +60,9 @@ def delete_user(request):
         except Exception as err:
             data["err"] = err
             data["success"] = False
+    else:
+        data["success"] = False
+        data["err"] = "no user to del"
     return JsonResponse(data)
 
 
