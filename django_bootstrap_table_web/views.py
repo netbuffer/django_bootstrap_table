@@ -100,7 +100,7 @@ def user_list(request):
 from django.db import connection
 
 
-# 获取当时新增数据
+# 获取当日新增数据
 def newdata(request):
     with connection.cursor() as cursor:
         cursor.execute(
@@ -114,12 +114,23 @@ def newdata(request):
     return JsonResponse(data)
 
 
+# 分组统计
 def datacount(request):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select count(id) num, FROM_UNIXTIME(adddate, '%Y-%m-%d') adddate from {0} group by FROM_UNIXTIME(adddate, '%Y-%m-%d')".format(
+                DjangoBootstrapTableWebConfig.name + "_user"))
+        sum = cursor.fetchall()
+    d = []
+    c = []
+    for s in sum:
+        d.append(s[0])
+        c.append(s[1])
     data = {
-        "d": 10,
-        "c": ["2018-02-04"]
+        "d": d,
+        "c": c
     }
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return JsonResponse(data)
 
 
 def test(request):
