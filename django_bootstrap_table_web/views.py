@@ -83,10 +83,13 @@ def user_list(request):
     if "offset" in request.GET:
         offset = request.GET["offset"]
 
+    order = request.GET.get("order", default="desc")
+    order = "-" if order == "desc" else ""
+    sort = request.GET.get("sort", default="adddate")
     if limit and int(limit) > 0 and offset and int(offset) >= 0:
-        users = User.objects.all()[int(offset):int(offset) + int(limit)]
+        users = User.objects.order_by(order + sort).all()[int(offset):int(offset) + int(limit)]
     else:
-        users = User.objects.all()
+        users = User.objects.order_by(order + sort).all()
 
     rows = []
     for user in users:
