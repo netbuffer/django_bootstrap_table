@@ -9,8 +9,10 @@ from django_bootstrap_table_web.models import user2dict
 from .forms import UserForm
 from .apps import DjangoBootstrapTableWebConfig
 
-
 # Create your views here.
+
+USER_TABLE_SUFFIX = "_user"
+
 
 # 添加/修改用户
 def user(request):
@@ -66,12 +68,11 @@ def detail(request, id=None):
         user_id = request.GET.get("id", None)
     if not user_id:
         return JsonResponse([])
-    u = None
     try:
-        u = user2dict(User.objects.get(id=id))
+        return JsonResponse(user2dict(User.objects.get(id=user_id)))
     except Exception as err:
         print("err:", err)
-    return HttpResponse(json.dumps(u), content_type="application/json")
+        return JsonResponse([], safe=False)
 
 
 # 返回user list json数据
@@ -105,7 +106,7 @@ def newdata(request):
     with connection.cursor() as cursor:
         cursor.execute(
             "select count(id) from {0} where DATE_FORMAT(NOW(), '%Y-%m-%d') = FROM_UNIXTIME(adddate, '%Y-%m-%d')".format(
-                DjangoBootstrapTableWebConfig.name + "_user"))
+                DjangoBootstrapTableWebConfig.name + USER_TABLE_SUFFIX))
         count = cursor.fetchone()[0]
     data = {
         "newcount": count,
@@ -119,7 +120,7 @@ def datacount(request):
     with connection.cursor() as cursor:
         cursor.execute(
             "select count(id) num, FROM_UNIXTIME(adddate, '%Y-%m-%d') adddate from {0} group by FROM_UNIXTIME(adddate, '%Y-%m-%d')".format(
-                DjangoBootstrapTableWebConfig.name + "_user"))
+                DjangoBootstrapTableWebConfig.name + USER_TABLE_SUFFIX))
         sum = cursor.fetchall()
     d = []
     c = []
@@ -150,3 +151,11 @@ def hello(request):
 # redirect响应
 def redirect(request):
     return HttpResponseRedirect(reverse("django_bootstrap_table:detail", args=(1,)))
+
+
+# 使用raw查询
+def raw_user(request):
+    user_id = request.GET.get("id", default=1)
+    raw_user = User.objects.raw(
+        "select * from {0} where id={1}".format(DjangoBootstrapTableWebConfig.name + USER_TABLE_SUFFIX, user_id))
+    return JsonResponse(user2dict(raw_user[0]))
