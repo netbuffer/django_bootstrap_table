@@ -19,6 +19,7 @@ from django.urls import path
 
 from . import controller
 
+# auth https://docs.djangoproject.com/en/2.0/topics/auth/default/
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', controller.index),
