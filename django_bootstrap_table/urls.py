@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+
 from . import controller
 
 urlpatterns = [
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', controller.index),
+    path('accounts/profile/', controller.index),
     path('admin/', admin.site.urls),
     path("user/", include("django_bootstrap_table_web.mappings")),
 ]

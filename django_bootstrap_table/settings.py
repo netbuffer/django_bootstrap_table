@@ -121,11 +121,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # 关联static文件夹
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    'd:/static',
+]
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-#     'd:/static',
-# ]
-
-print("use STATIC_ROOT:", STATIC_ROOT)
+print("use STATIC_ROOT:", STATICFILES_DIRS)

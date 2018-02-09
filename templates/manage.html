@@ -28,7 +28,7 @@
                 "format": "YYYY-MM-DD HH:mm:ss"
             });
 
-            $.getJSON('user/newdata', function (data) {
+            $.getJSON('{% url "django_bootstrap_table:newdata" %}', function (data) {
                 $("#xinzeng").text(data.newcount);
                 $("#xinzeng").tooltip({
                     "title": "今日新增数据，点击查看",
@@ -36,7 +36,7 @@
                 });
                 $("#xinzeng").mouseover();
                 $(".login_username").text(data.username);
-                $.getJSON('user/datacount', function (data) {
+                $.getJSON('{% url "django_bootstrap_table:datacount" %}', function (data) {
                     var myChart = echarts.init(document
                         .getElementById('echarts_test'));
                     var option = {
@@ -276,7 +276,7 @@
         function sys_Exit() {
             bootbox.confirm("确定退出系统吗？", function (result) {
                 if (result) {
-                    window.location.href = "exit";
+                    window.location.href = "{% url "logout" %}";
                 }
             });
 // 		if (confirm("确定退出系统吗")) {
@@ -391,7 +391,7 @@
     <!--<p class="text-center text-success">支持中文首字母查询</p>-->
     <!-- data-page-size设定分页大小 -->
     <table id="dtb" data-toggle="table"
-           data-url="user/userlist" class="table table-hover"
+           data-url="{% url "django_bootstrap_table:userlist" %}" class="table table-hover"
            data-show-columns="true" data-search="true" data-show-refresh="true"
            data-show-toggle="true" data-show-export="true"
            data-page-size="20"
