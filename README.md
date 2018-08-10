@@ -13,3 +13,6 @@
 创建用户`python manage.py createsuperuser`  
 进入命令行交互:`python manage.py shell`  
 运行测试用例:`python manage.py test django_bootstrap_table`
+
+# 微信扫码使用gitee工具
+![gitee工具](https://s1.ax1x.com/2018/08/10/P60MMF.jpg)
