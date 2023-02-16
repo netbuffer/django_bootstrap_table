@@ -1,6 +1,7 @@
 # django_bootstrap_table
 
-> 安装django:`pip install Django`  
+```
+安装django:`pip install Django`  
 进入工程根目录执行:`python manage.py startapp django_bootstrap_table_web`来创建应用  
 执行`python manage.py runserver 8080` 启动server  
 查看django版本:`python -m django --version`  
@@ -13,3 +14,5 @@
 创建用户`python manage.py createsuperuser`  
 进入命令行交互:`python manage.py shell`  
 运行测试用例:`python manage.py test django_bootstrap_table`
+pip install -r requirements.txt
+```
