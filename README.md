@@ -1,4 +1,6 @@
 # django_bootstrap_table
+* http://github.com/netbuffer/django_bootstrap_table
+* http://gitee.com/netbuffer/django_bootstrap_table
 
 ```
 安装django:`pip install Django`  
