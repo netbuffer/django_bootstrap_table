@@ -17,4 +17,5 @@
 进入命令行交互:`python manage.py shell`  
 运行测试用例:`python manage.py test django_bootstrap_table`
 pip install -r requirements.txt
+pipenv --python 3
 ```
